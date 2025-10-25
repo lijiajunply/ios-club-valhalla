@@ -3,7 +3,8 @@ import { useEffect, useState } from 'react';
 import Hero from './components/Hero';
 import MemorialCard from './components/MemorialCard';
 import { getMemorials } from '@/lib/services/memorialService';
-import {Memorial} from "@prisma/client";
+import { Memorial } from "@prisma/client";
+import Link from 'next/link';
 
 // 静态数据作为后备
 const staticMemorialData = [
@@ -61,6 +62,9 @@ export default function Home() {
           <p className="text-gray-600 max-w-2xl mx-auto">
             他们用自己的智慧和汗水，为俱乐部的发展做出了不可磨灭的贡献
           </p>
+          {/*<Link href="/memorials/new" className="mt-6 inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">*/}
+          {/*  添加英灵*/}
+          {/*</Link>*/}
         </div>
         
         {memorials.length === 0 ? (
@@ -70,12 +74,14 @@ export default function Home() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {memorials.map((memorial) => (
-              <MemorialCard 
-                key={memorial.id}
-                title={memorial.title}
-                name={memorial.name}
-                description={memorial.description}
-              />
+              <Link href={''} key={memorial.id} className="block">
+                <MemorialCard 
+                  title={memorial.title}
+                  name={memorial.name}
+                  description={memorial.description}
+                />
+              </Link>
+                // href={`/memorials/${memorial.id}`}
             ))}
           </div>
         )}

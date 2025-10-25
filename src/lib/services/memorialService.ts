@@ -16,6 +16,23 @@ export async function getMemorials(): Promise<Memorial[]> {
   }
 }
 
+// 获取单个英灵
+export async function getMemorialById(id: number): Promise<Memorial> {
+  try {
+    const response = await fetch(`/api/memorials/${id}`);
+    if (!response.ok) {
+      if (response.status === 404) {
+        throw new Error('英灵未找到');
+      }
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Failed to fetch memorial:', error);
+    throw error;
+  }
+}
+
 // 创建新的英灵
 export async function createMemorial(data: { title: string; name: string; description: string }) {
   try {

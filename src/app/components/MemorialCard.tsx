@@ -6,8 +6,8 @@ interface MemorialCardProps {
 
 export default function MemorialCard({ title, name, description }: MemorialCardProps) {
   return (
-    <div className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-      <div className="p-6">
+    <div className="bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 h-full flex flex-col">
+      <div className="p-6 flex-grow">
         <div className="flex items-center mb-4">
           <div className="w-3 h-3 rounded-full bg-blue-500 mr-2"></div>
           <span className="text-sm font-medium text-gray-500 uppercase tracking-wider">{title}</span>

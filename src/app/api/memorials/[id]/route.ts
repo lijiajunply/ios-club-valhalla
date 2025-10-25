@@ -6,10 +6,12 @@ const memorialRepository = new MemorialRepository();
 // GET /api/memorials/[id] - 根据ID获取英灵
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
+    // 处理 Next.js 15 中 params 可能是 Promise 的情况
+    const resolvedParams = params instanceof Promise ? await params : params;
+    const id = parseInt(resolvedParams.id);
     if (isNaN(id)) {
       return NextResponse.json(
         { error: 'Invalid ID' },
@@ -38,10 +40,12 @@ export async function GET(
 // PUT /api/memorials/[id] - 更新英灵信息
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
+    // 处理 Next.js 15 中 params 可能是 Promise 的情况
+    const resolvedParams = params instanceof Promise ? await params : params;
+    const id = parseInt(resolvedParams.id);
     if (isNaN(id)) {
       return NextResponse.json(
         { error: 'Invalid ID' },
@@ -81,10 +85,12 @@ export async function PUT(
 // DELETE /api/memorials/[id] - 删除英灵
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
-    const id = parseInt(params.id);
+    // 处理 Next.js 15 中 params 可能是 Promise 的情况
+    const resolvedParams = params instanceof Promise ? await params : params;
+    const id = parseInt(resolvedParams.id);
     if (isNaN(id)) {
       return NextResponse.json(
         { error: 'Invalid ID' },
