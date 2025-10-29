@@ -6,7 +6,7 @@ export default function Hero() {
           致敬传奇
         </h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-10">
-          纪念那些曾经为俱乐部发展做出卓越贡献的伟大人物
+          纪念那些曾经为 iOS Club 发展做出卓越贡献的伟大人物
         </p>
         <div className="flex justify-center gap-4">
           <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors">

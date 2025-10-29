@@ -10,7 +10,7 @@ async function main() {
     console.log('Seeding initial data...');
     
     const initialMemorials = [
-      { title: '高祖', name: '韩晨超', description: '创始人，奠定基石' },
+      { title: '太祖', name: '韩晨超', description: '创始人，奠定基石' },
       { title: '高宗', name: '邵涧泽', description: '继任者，开疆拓土' },
       { title: '太宗', name: '韩天昂', description: '中兴之主，再创辉煌' },
       { title: '仁宗', name: '李嘉俊', description: '仁德之君，惠及众人' },

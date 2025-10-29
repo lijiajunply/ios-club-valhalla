@@ -54,7 +54,7 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { title, name, description } = body;
+    const { title, name, description, deed } = body;
 
     // 检查英灵是否存在
     const existingMemorial = await memorialRepository.getById(id);
@@ -69,7 +69,8 @@ export async function PUT(
     const updatedMemorial = await memorialRepository.update(id, {
       title,
       name,
-      description
+      description,
+      deed: deed || null
     });
 
     return NextResponse.json(updatedMemorial);

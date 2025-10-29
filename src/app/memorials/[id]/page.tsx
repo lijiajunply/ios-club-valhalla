@@ -167,6 +167,13 @@ export default function MemorialDetailPage({params}: { params: Promise<{ id: str
                                 <p className="text-gray-600 leading-relaxed">{memorial.description}</p>
                             </div>
 
+                            {memorial.deed && (
+                                <div className="mt-8">
+                                    <h2 className="text-xl font-bold text-gray-900 mb-4">具体事迹</h2>
+                                    <p className="text-gray-600 leading-relaxed whitespace-pre-line">{memorial.deed}</p>
+                                </div>
+                            )}
+
                             <div className="mt-8 pt-6 border-t border-gray-100">
                                 <div className="flex justify-between items-center">
                   <span className="text-sm text-gray-500">

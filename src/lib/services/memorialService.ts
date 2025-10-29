@@ -34,7 +34,7 @@ export async function getMemorialById(id: number): Promise<Memorial> {
 }
 
 // 创建新的英灵
-export async function createMemorial(data: { title: string; name: string; description: string }) {
+export async function createMemorial(data: { title: string; name: string; description: string; deed?: string }) {
   try {
     const response = await fetch('/api/memorials', {
       method: 'POST',
@@ -56,7 +56,7 @@ export async function createMemorial(data: { title: string; name: string; descri
 }
 
 // 更新英灵信息
-export async function updateMemorial(id: number, data: { title: string; name: string; description: string }) {
+export async function updateMemorial(id: number, data: { title: string; name: string; description: string; deed?: string }) {
   try {
     const response = await fetch(`/api/memorials/${id}`, {
       method: 'PUT',

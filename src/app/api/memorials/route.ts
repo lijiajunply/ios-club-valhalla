@@ -21,7 +21,7 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { title, name, description } = body;
+    const { title, name, description, deed } = body;
 
     // 验证必需字段
     if (!title || !name || !description) {
@@ -34,7 +34,8 @@ export async function POST(request: Request) {
     const memorial = await memorialRepository.create({
       title,
       name,
-      description
+      description,
+      deed: deed || null
     });
 
     return NextResponse.json(memorial, { status: 201 });

@@ -18,6 +18,7 @@ model Memorial {
   title       String   // 皇帝的称号，如"高祖"
   name        String   // 姓名，如"韩晨超"
   description String   // 描述，如"创始人，奠定基石"
+  deed        String?  // 具体事迹
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

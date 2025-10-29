@@ -14,7 +14,7 @@ export default function Header() {
           <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center mr-3">
             <span className="text-white font-bold text-xl">V</span>
           </div>
-          <Link href="/" className="text-2xl font-bold text-gray-900">iOS Club 英灵殿</Link>
+          <Link href="/" className="text-2xl font-bold text-gray-900">iOS Club 凌烟阁</Link>
         </div>
         
         {/* Desktop Navigation */}
