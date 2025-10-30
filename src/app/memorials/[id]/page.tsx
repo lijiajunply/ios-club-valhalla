@@ -29,18 +29,14 @@ export default function MemorialDetailPage({params}: { params: Promise<{ id: str
                 // 将字符串ID转换为数字ID
                 const memorialId = parseInt(resolvedParams.id, 10);
                 if (isNaN(memorialId)) {
-                    setError('无效的英灵ID');
+                    setError('无效ID');
                     return;
                 }
 
                 const data = await getMemorialById(memorialId);
                 setMemorial(data);
-            } catch (err: unknown) {
-                if (err.message === '英灵未找到') {
-                    setError('英灵未找到');
-                } else {
-                    setError('获取英灵信息失败');
-                }
+            } catch (err) {
+                setError('获取信息失败');
                 console.error('Failed to fetch memorial:', err);
             } finally {
                 setLoading(false);
@@ -55,7 +51,7 @@ export default function MemorialDetailPage({params}: { params: Promise<{ id: str
     const handleDelete = async () => {
         if (!memorial) return;
 
-        if (window.confirm('确定要删除这位英灵吗？此操作不可撤销。')) {
+        if (window.confirm('确定要删除这位✌️吗？此操作不可撤销。')) {
             try {
                 await deleteMemorial(memorial.id);
                 router.push('/');
@@ -79,7 +75,7 @@ export default function MemorialDetailPage({params}: { params: Promise<{ id: str
                 <div className="text-center">
                     <div
                         className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                    <p className="mt-4 text-gray-600">正在加载英灵信息...</p>
+                    <p className="mt-4 text-gray-600">正在加载信息...</p>
                 </div>
             </div>
         );
@@ -106,7 +102,7 @@ export default function MemorialDetailPage({params}: { params: Promise<{ id: str
         return (
             <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex items-center justify-center">
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold text-gray-900 mb-4">英灵未找到</h1>
+                    <h1 className="text-2xl font-bold text-gray-900 mb-4">未找到</h1>
                     <button
                         onClick={() => router.back()}
                         className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors"
