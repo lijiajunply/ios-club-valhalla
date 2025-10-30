@@ -61,7 +61,7 @@ export default function Home() {
                 <div className="text-center">
                     <div
                         className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
-                    <p className="mt-4 text-gray-600">正在加载英灵数据...</p>
+                    <p className="mt-4 text-gray-600">正在加载数据...</p>
                 </div>
             </div>
         );
@@ -77,9 +77,6 @@ export default function Home() {
                     <p className="text-gray-600 max-w-2xl mx-auto">
                         他们用自己的智慧和汗水，为俱乐部的发展做出了不可磨灭的贡献
                     </p>
-                    {/*<Link href="/memorials/new" className="mt-6 inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">*/}
-                    {/*  添加英灵*/}
-                    {/*</Link>*/}
                 </div>
 
                 {memorials.length === 0 ? (
