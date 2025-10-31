@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createMemorial } from '@/lib/services/memorialService';
+import { Tag } from '@prisma/client';
 
 export default function NewMemorialPage() {
   const router = useRouter();
@@ -10,16 +11,32 @@ export default function NewMemorialPage() {
     title: '',
     name: '',
     description: '',
-    deed: ''
+    deed: '',
+    tags: [] as Tag[]
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleTagChange = (tag: Tag, checked: boolean) => {
+    if (checked) {
+      setFormData(prev => ({
+        ...prev,
+        tags: [...prev.tags, tag]
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        tags: prev.tags.filter(t => t !== tag)
+      }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,6 +55,15 @@ export default function NewMemorialPage() {
       setLoading(false);
     }
   };
+
+  const tagOptions = [
+    { value: Tag.FOUNDER, label: '创始人' },
+    { value: Tag.LEADER, label: '领导者' },
+    { value: Tag.CONTRIBUTOR, label: '贡献者' },
+    { value: Tag.INNOVATOR, label: '创新者' },
+    { value: Tag.MENTOR, label: '导师' },
+    { value: Tag.VOLUNTEER, label: '志愿者' },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
@@ -126,6 +152,29 @@ export default function NewMemorialPage() {
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
                     placeholder="详细描述这位英灵的具体事迹（可选）"
                   ></textarea>
+                </div>
+                
+                <div className="mb-6">
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    标签
+                  </label>
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {tagOptions.map((option) => (
+                      <div key={option.value} className="flex items-center">
+                        <input
+                          id={`tag-${option.value}`}
+                          type="checkbox"
+                          value={option.value}
+                          checked={formData.tags.includes(option.value)}
+                          onChange={(e) => handleTagChange(option.value, e.target.checked)}
+                          className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                        />
+                        <label htmlFor={`tag-${option.value}`} className="ml-2 text-sm text-gray-700">
+                          {option.label}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
                 </div>
                 
                 <div className="flex justify-end space-x-4">

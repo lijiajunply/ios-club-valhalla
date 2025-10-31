@@ -1,7 +1,7 @@
 // 服务层：处理与英灵相关的业务逻辑
 
 // 获取所有英灵
-import {Memorial} from "@prisma/client";
+import {Memorial, Tag} from "@prisma/client";
 
 export async function getMemorials(): Promise<Memorial[]> {
   try {
@@ -34,7 +34,7 @@ export async function getMemorialById(id: number): Promise<Memorial> {
 }
 
 // 创建新的英灵
-export async function createMemorial(data: { title: string; name: string; description: string; deed?: string }) {
+export async function createMemorial(data: { title: string; name: string; description: string; deed?: string; tags?: Tag[] }) {
   try {
     const response = await fetch('/api/memorials', {
       method: 'POST',
@@ -56,7 +56,7 @@ export async function createMemorial(data: { title: string; name: string; descri
 }
 
 // 更新英灵信息
-export async function updateMemorial(id: number, data: { title: string; name: string; description: string; deed?: string }) {
+export async function updateMemorial(id: number, data: { title: string; name: string; description: string; deed?: string; tags?: Tag[] }) {
   try {
     const response = await fetch(`/api/memorials/${id}`, {
       method: 'PUT',

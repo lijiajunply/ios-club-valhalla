@@ -3,16 +3,16 @@ import {useEffect, useState} from 'react';
 import Hero from './components/Hero';
 import MemorialCard from './components/MemorialCard';
 import {getMemorials} from '@/lib/services/memorialService';
-import {Memorial} from "@prisma/client";
+import {Memorial, Tag} from "@prisma/client";
 import Link from 'next/link';
 
 // 静态数据作为后备
 const staticMemorialData = [
-    {id: 1, title: "高祖", name: "韩晨超", description: "创始人，奠定基石"},
-    {id: 2, title: "高宗", name: "邵涧泽", description: "继任者，开疆拓土"},
-    {id: 3, title: "太宗", name: "韩天昂", description: "中兴之主，再创辉煌"},
-    {id: 4, title: "仁宗", name: "李嘉俊", description: "仁德之君，惠及众人"},
-    {id: 5, title: "宪宗", name: "张硕航", description: "制度建设，规范发展"},
+    {id: 1, title: "高祖", name: "韩晨超", description: "创始人，奠定基石", tags: [Tag.FOUNDER]},
+    {id: 2, title: "高宗", name: "邵涧泽", description: "继任者，开疆拓土", tags: [Tag.LEADER]},
+    {id: 3, title: "太宗", name: "韩天昂", description: "中兴之主，再创辉煌", tags: [Tag.INNOVATOR]},
+    {id: 4, title: "仁宗", name: "李嘉俊", description: "仁德之君，惠及众人", tags: [Tag.CONTRIBUTOR]},
+    {id: 5, title: "宪宗", name: "张硕航", description: "制度建设，规范发展", tags: [Tag.MENTOR]},
 ] as Memorial[];
 
 export default function Home() {
@@ -86,14 +86,14 @@ export default function Home() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {memorials.map((memorial) => (
-                            <Link href={''} key={memorial.id} className="block">
+                            <Link href={`/memorials/${memorial.id}`} key={memorial.id} className="block">
                                 <MemorialCard
                                     title={memorial.title}
                                     name={memorial.name}
                                     description={memorial.description}
+                                    tags={memorial.tags}
                                 />
                             </Link>
-                            // href={`/memorials/${memorial.id}`}
                         ))}
                     </div>
                 )}

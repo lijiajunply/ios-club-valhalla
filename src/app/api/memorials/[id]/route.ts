@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { MemorialRepository } from '@/lib/repositories/memorialRepository';
+import { Tag } from '@prisma/client';
 
 const memorialRepository = new MemorialRepository();
 
@@ -54,7 +55,7 @@ export async function PUT(
     }
 
     const body = await request.json();
-    const { title, name, description, deed } = body;
+    const { title, name, description, deed, tags } = body;
 
     // 检查英灵是否存在
     const existingMemorial = await memorialRepository.getById(id);
@@ -65,12 +66,25 @@ export async function PUT(
       );
     }
 
+    // 验证标签值是否有效
+    if (tags && Array.isArray(tags)) {
+      const validTags = Object.values(Tag);
+      const invalidTags = tags.filter(tag => !validTags.includes(tag));
+      if (invalidTags.length > 0) {
+        return NextResponse.json(
+          { error: `Invalid tags: ${invalidTags.join(', ')}` },
+          { status: 400 }
+        );
+      }
+    }
+
     // 更新英灵信息
     const updatedMemorial = await memorialRepository.update(id, {
       title,
       name,
       description,
-      deed: deed || null
+      deed: deed || null,
+      tags: tags || []
     });
 
     return NextResponse.json(updatedMemorial);

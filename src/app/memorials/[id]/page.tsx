@@ -2,7 +2,7 @@
 
 import {useEffect, useState} from 'react';
 import {useRouter} from 'next/navigation';
-import {Memorial} from '@prisma/client';
+import {Memorial, Tag} from '@prisma/client';
 import {deleteMemorial, getMemorialById} from '@/lib/services/memorialService';
 
 export default function MemorialDetailPage({params}: { params: Promise<{ id: string }> }) {
@@ -66,6 +66,19 @@ export default function MemorialDetailPage({params}: { params: Promise<{ id: str
     const handleEdit = () => {
         if (memorial) {
             router.push(`/memorials/${memorial.id}/edit`);
+        }
+    };
+
+    // 将枚举值转换为中文标签
+    const getTagLabel = (tag: Tag) => {
+        switch (tag) {
+            case Tag.FOUNDER: return '创始人';
+            case Tag.LEADER: return '领导者';
+            case Tag.CONTRIBUTOR: return '贡献者';
+            case Tag.INNOVATOR: return '创新者';
+            case Tag.MENTOR: return '导师';
+            case Tag.VOLUNTEER: return '志愿者';
+            default: return tag;
         }
     };
 
@@ -167,6 +180,22 @@ export default function MemorialDetailPage({params}: { params: Promise<{ id: str
                                 <div className="mt-8">
                                     <h2 className="text-xl font-bold text-gray-900 mb-4">具体事迹</h2>
                                     <p className="text-gray-600 leading-relaxed whitespace-pre-line">{memorial.deed}</p>
+                                </div>
+                            )}
+
+                            {memorial.tags && memorial.tags.length > 0 && (
+                                <div className="mt-8">
+                                    <h2 className="text-xl font-bold text-gray-900 mb-4">标签</h2>
+                                    <div className="flex flex-wrap gap-2">
+                                        {memorial.tags.map((tag, index) => (
+                                            <span 
+                                                key={index} 
+                                                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800"
+                                            >
+                                                {getTagLabel(tag)}
+                                            </span>
+                                        ))}
+                                    </div>
                                 </div>
                             )}
 
