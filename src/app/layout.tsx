@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "iOS Club 英灵殿",
+    title: "iOS Club 凌烟阁",
     description: "纪念那些曾经为人民服务的伟大的人",
 };
 

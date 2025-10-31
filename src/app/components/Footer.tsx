@@ -10,18 +10,17 @@ export default function Footer() {
               <div className="w-8 h-8 rounded-lg bg-gradient-to-r from-blue-500 to-indigo-600 flex items-center justify-center mr-2">
                 <span className="text-white font-bold text-lg">V</span>
               </div>
-              <h2 className="text-xl font-bold">iOS Club 英灵殿</h2>
+              <h2 className="text-xl font-bold">iOS Club 凌烟阁</h2>
             </div>
             <p className="mt-2 text-gray-400 text-sm">纪念传奇，传承精神</p>
           </div>
           <div className="flex space-x-6">
             <Link href="/" className="text-gray-400 hover:text-white transition-colors">首页</Link>
-            <Link href="/about/page" className="text-gray-400 hover:text-white transition-colors">关于</Link>
-            <a href="mailto:valhalla@iosclub.com" className="text-gray-400 hover:text-white transition-colors">联系</a>
+            <Link href="/about" className="text-gray-400 hover:text-white transition-colors">关于</Link>
           </div>
         </div>
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
-          <p>© {new Date().getFullYear()} iOS Club 英灵殿. 保留所有权利。</p>
+          <p>© 2024 - {new Date().getFullYear()} iOS Club of XAUAT 保留所有权利。</p>
         </div>
       </div>
     </footer>

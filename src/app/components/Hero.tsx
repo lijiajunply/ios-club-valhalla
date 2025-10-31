@@ -8,14 +8,6 @@ export default function Hero() {
         <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-10">
           纪念那些曾经为 iOS Club 发展做出卓越贡献的伟大人物
         </p>
-        <div className="flex justify-center gap-4">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition-colors">
-            了解更多
-          </button>
-          <button className="border border-gray-300 hover:border-gray-400 text-gray-700 font-medium py-3 px-6 rounded-lg transition-colors">
-            参观英灵殿
-          </button>
-        </div>
       </div>
     </section>
   );
