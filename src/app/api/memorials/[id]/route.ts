@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { MemorialRepository } from '@/lib/repositories/memorialRepository';
 import { Tag } from '@prisma/client';
+import { isAuthenticated } from '@/lib/services/authService';
 
 const memorialRepository = new MemorialRepository();
 
@@ -43,6 +44,14 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
+  // 检查用户是否已认证
+  if (!(await isAuthenticated(request))) {
+    return NextResponse.json(
+      { error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
+
   try {
     // 处理 Next.js 15 中 params 可能是 Promise 的情况
     const resolvedParams = params instanceof Promise ? await params : params;
@@ -102,6 +111,14 @@ export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
+  // 检查用户是否已认证
+  if (!(await isAuthenticated(request))) {
+    return NextResponse.json(
+      { error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
+
   try {
     // 处理 Next.js 15 中 params 可能是 Promise 的情况
     const resolvedParams = params instanceof Promise ? await params : params;

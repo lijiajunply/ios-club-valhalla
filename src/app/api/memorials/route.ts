@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { MemorialRepository } from '@/lib/repositories/memorialRepository';
 import { Tag } from '@prisma/client';
+import { isAuthenticated } from '@/lib/services/authService';
 
 const memorialRepository = new MemorialRepository();
 
@@ -20,6 +21,14 @@ export async function GET() {
 
 // POST /api/memorials - 创建新的英灵
 export async function POST(request: Request) {
+  // 检查用户是否已认证
+  if (!(await isAuthenticated(request))) {
+    return NextResponse.json(
+      { error: 'Unauthorized' },
+      { status: 401 }
+    );
+  }
+
   try {
     const body = await request.json();
     const { title, name, description, deed, tags } = body;

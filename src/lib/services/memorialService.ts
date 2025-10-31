@@ -2,6 +2,7 @@
 
 // 获取所有英灵
 import {Memorial, Tag} from "@prisma/client";
+import { getClientAuthToken, isClientAuthenticated } from "./authService";
 
 export async function getMemorials(): Promise<Memorial[]> {
   try {
@@ -35,12 +36,26 @@ export async function getMemorialById(id: number): Promise<Memorial> {
 
 // 创建新的英灵
 export async function createMemorial(data: { title: string; name: string; description: string; deed?: string; tags?: Tag[] }) {
+  // 检查客户端是否已认证
+  if (!isClientAuthenticated()) {
+    throw new Error('用户未登录');
+  }
+
+  const authToken = getClientAuthToken();
+  
   try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    
+    // 如果提供了认证令牌，则添加到请求头中
+    if (authToken) {
+      headers['Authorization'] = `Basic ${authToken}`;
+    }
+    
     const response = await fetch('/api/memorials', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify(data),
     });
     
@@ -57,12 +72,26 @@ export async function createMemorial(data: { title: string; name: string; descri
 
 // 更新英灵信息
 export async function updateMemorial(id: number, data: { title: string; name: string; description: string; deed?: string; tags?: Tag[] }) {
+  // 检查客户端是否已认证
+  if (!isClientAuthenticated()) {
+    throw new Error('用户未登录');
+  }
+
+  const authToken = getClientAuthToken();
+
   try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    };
+    
+    // 如果提供了认证令牌，则添加到请求头中
+    if (authToken) {
+      headers['Authorization'] = `Basic ${authToken}`;
+    }
+    
     const response = await fetch(`/api/memorials/${id}`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify(data),
     });
     
@@ -79,9 +108,24 @@ export async function updateMemorial(id: number, data: { title: string; name: st
 
 // 删除英灵
 export async function deleteMemorial(id: number) {
+  // 检查客户端是否已认证
+  if (!isClientAuthenticated()) {
+    throw new Error('用户未登录');
+  }
+
+  const authToken = getClientAuthToken();
+
   try {
+    const headers: Record<string, string> = {};
+    
+    // 如果提供了认证令牌，则添加到请求头中
+    if (authToken) {
+      headers['Authorization'] = `Basic ${authToken}`;
+    }
+    
     const response = await fetch(`/api/memorials/${id}`, {
       method: 'DELETE',
+      headers,
     });
     
     if (!response.ok) {

@@ -31,6 +31,12 @@ export default function Header() {
           >
             关于
           </Link>
+          <Link 
+            href="/login"
+            className={`font-medium transition-colors ${pathname === '/login' ? 'text-blue-600' : 'text-gray-600 hover:text-gray-900'}`}
+          >
+            登录
+          </Link>
         </nav>
         
         {/* Mobile menu button */}
@@ -60,11 +66,18 @@ export default function Header() {
               首页
             </Link>
             <Link 
-              href="/about/page"
+              href="/about"
               className={`font-medium py-2 ${pathname === '/about' ? 'text-blue-600' : 'text-gray-600'}`}
               onClick={() => setIsMenuOpen(false)}
             >
               关于
+            </Link>
+            <Link 
+              href="/login"
+              className={`font-medium py-2 ${pathname === '/login' ? 'text-blue-600' : 'text-gray-600'}`}
+              onClick={() => setIsMenuOpen(false)}
+            >
+              登录
             </Link>
           </div>
         </div>
