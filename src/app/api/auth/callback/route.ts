@@ -12,6 +12,7 @@ export async function GET(request: Request) {
   if (code) {
     // 重定向回登录页面，让客户端处理回调
     const redirectUrl = `/login?code=${code}${state ? `&state=${state}` : ''}`;
+    console.log('base', request.url);
     return NextResponse.redirect(new URL(redirectUrl, request.url));
   }
   
