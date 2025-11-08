@@ -1,16 +1,16 @@
 "use client";
 
-import {useCallback, useEffect, useState} from "react";
+import {useCallback, useEffect, useState, Suspense} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 import {handleOAuthCallback, redirectToOAuth} from "@/lib/services/authService";
-import { useAuth } from "@/app/contexts/AuthContext";
+import {useAuth} from "@/app/contexts/AuthContext";
 
-export default function LoginPage() {
+function LoginContent() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
     const router = useRouter();
     const searchParams = useSearchParams();
-    const { login } = useAuth();
+    const {login} = useAuth();
 
     const handleOAuthLogin = useCallback(async () => {
         setIsLoading(true);
@@ -111,5 +111,13 @@ export default function LoginPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+export default function LoginPage() {
+    return (
+        <Suspense fallback={<div>加载中...</div>}>
+            <LoginContent/>
+        </Suspense>
     );
 }
