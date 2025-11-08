@@ -11,9 +11,11 @@ export async function GET(request: Request) {
   
   if (code) {
     // 重定向回登录页面，让客户端处理回调
-    const redirectUrl = `/login?code=${code}${state ? `&state=${state}` : ''}`;
-    return NextResponse.redirect(new URL(redirectUrl));
+    const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+    const redirectUrl = `${baseUrl}/login?code=${code}${state ? `&state=${state}` : ''}`;
+    return NextResponse.redirect(redirectUrl);
   }
   
-  return NextResponse.redirect(new URL('/login'));
+  const baseUrl = process.env.BASE_URL || 'http://localhost:3000';
+  return NextResponse.redirect(`${baseUrl}/login`);
 }
