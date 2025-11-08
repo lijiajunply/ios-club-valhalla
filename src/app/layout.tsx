@@ -5,6 +5,8 @@ import {headers} from 'next/headers';
 import {isAuthenticated} from "@/lib/services/authService";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
+import React from "react";
+import { AuthProvider } from "@/app/contexts/AuthContext";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -26,21 +28,18 @@ export default async function RootLayout({
                                          }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const headersList = await headers();
-    const isAuthorized = await isAuthenticated({
-        headers: Object.fromEntries(headersList),
-    } as unknown as Request);
-
     return (
         <html lang="zh-CN">
         <body
             className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100`}
         >
-        <Header isAuthenticated={isAuthorized}/>
-        <main className="flex-grow">
-            {children}
-        </main>
-        <Footer/>
+        <AuthProvider>
+            <Header/>
+            <main className="flex-grow">
+                {children}
+            </main>
+            <Footer/>
+        </AuthProvider>
         </body>
         </html>
     );

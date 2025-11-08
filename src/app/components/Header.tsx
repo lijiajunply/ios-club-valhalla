@@ -2,20 +2,15 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { isClientAuthenticated, oauthLogout } from "@/lib/services/authService";
+import { useAuth } from "@/app/contexts/AuthContext";
 
-interface HeaderProps {
-  isAuthenticated?: boolean;
-}
-
-export default function Header({ isAuthenticated: serverIsAuthenticated }: HeaderProps) {
+export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const clientIsAuthenticated = isClientAuthenticated();
-  const isAuthenticated = serverIsAuthenticated ?? clientIsAuthenticated;
+  const { isAuthenticated, logout } = useAuth();
 
   const handleLogout = () => {
-    oauthLogout();
+    logout();
     router.push("/login");
     router.refresh();
   };

@@ -20,9 +20,9 @@ export function redirectToOAuth(): void {
     localStorage.setItem('oauth_state', state);
     
     const params = new URLSearchParams({
-        responseType: 'code',
-        clientId: OAUTH_CONFIG.clientId,
-        redirectUri: OAUTH_CONFIG.redirectUri,
+        response_type: 'code',
+        client_id: OAUTH_CONFIG.clientId,
+        redirect_uri: OAUTH_CONFIG.redirectUri,
         scope: 'openid profile email',
         state: state,
     });
@@ -58,11 +58,11 @@ export async function handleOAuthCallback(searchParams: URLSearchParams): Promis
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: new URLSearchParams({
-                grantType: 'authorization_code',
-                clientId: OAUTH_CONFIG.clientId,
+                grant_type: 'authorization_code',
+                client_id: OAUTH_CONFIG.clientId,
                 code: code,
-                clientSecret: process.env.NEXT_PUBLIC_OAUTH_CLIENT_SECRET || '',
-                redirectUri: OAUTH_CONFIG.redirectUri,
+                client_secret: process.env.NEXT_PUBLIC_OAUTH_CLIENT_SECRET || '',
+                redirect_uri: OAUTH_CONFIG.redirectUri,
             }),
         });
         
@@ -151,11 +151,9 @@ export async function isAuthenticated(request: Request): Promise<boolean> {
                          data['role'];
             
             // 处理单个角色或角色数组的情况
-            const hasValidRole = Array.isArray(role) 
+            return Array.isArray(role)
                 ? role.some(r => ['President', 'Minister', 'Founder'].includes(r))
                 : ['President', 'Minister', 'Founder'].includes(role);
-            
-            return hasValidRole;
         } catch (error) {
             console.error('Failed to parse JWT:', error);
             return false;

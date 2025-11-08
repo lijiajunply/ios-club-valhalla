@@ -2,7 +2,26 @@
 
 // 获取所有英灵
 import {Memorial, Tag} from "@prisma/client";
-import { getClientAuthToken, isClientAuthenticated } from "./authService";
+import { getClientAuthToken } from "./authService";
+
+// 检查客户端是否已认证的辅助函数
+function isClientAuthenticated(): boolean {
+  if (typeof window !== 'undefined') {
+    const authToken = localStorage.getItem('authToken');
+    if (!authToken) return false;
+    
+    try {
+      // 对于OAuth2，我们需要解析JSON格式的令牌
+      const authInfo = JSON.parse(authToken);
+      // 检查令牌是否过期
+      return authInfo.expiresAt > Date.now();
+    } catch {
+      // 如果不是JSON格式，则使用旧的认证方法
+      return !!authToken;
+    }
+  }
+  return false;
+}
 
 export async function getMemorials(): Promise<Memorial[]> {
   try {
